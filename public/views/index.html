@@ -1,0 +1,45 @@
+<html>
+<head>
+	 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>
+	<script src="../javascripts/settings.js"></script>
+	<script src="../javascripts/controller.js"></script>
+</head>
+<body ng-app="processApp" ng-controller="ProcessingController">
+	<div layout="row" layout-margin="10">
+		<div layout="column" layout-margin="10">
+			<input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+			<img ng-src="{{picture}}"/>
+		</div>
+
+		<div layout="column" layout-margin="10">
+    		<label>Select processing</label>
+    		<md-select ng-model="scr">
+        		<md-option ng-repeat="script in scripts" ng-value="script" ng-click="scriptSelected(script)">
+          		{{script.name}}
+       			</md-option>
+      		</md-select>
+
+        	<md-list>
+				<md-list-item ng-repeat="script in selectedScripts track by $index">
+					{{script.name}}
+					<md-input-container layout-margin="10">
+						<label>Parameters</label>
+						<input type="text" ng-model="script.params">
+					</md-input-container>
+					<ng-md-icon icon="close" style="fill: black" size="20" ng-click="removeScript($index)"></ng-md-icon>
+				</md-list-item>
+			</md-list>
+			<md-button class="md-raised md-primary" ng-click="process()" ng-show="picture && selectedScripts.length>0">Process</md-button>
+			<md-button class="md-raised md-primary" ng-click="download()" ng-show="downloadButton">Download</md-button>
+		</div>
+	</div>
+</body>
+</html>

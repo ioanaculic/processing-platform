@@ -1,0 +1,4 @@
+echo process
+input=$1
+output=$2
+convert -type Grayscale $input $output
